@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Section Webpage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .section {
+            width: 66%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .section-1, .section-3 {
+            background-color: #0f5223;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .section-1 h1 {
+            margin: 0;
+            color: rgb(255, 255, 255);
+            font-family: Merriwheater, Georgia, serif;
+            font-size: 60px;
+            line-height: 120%;
+        }
+        .section-2 {
+            background-color: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .column {
+            flex: 1;
+            padding: 20px;
+        }
+        .bitcoin-image {
+            display: block;
+            margin: 0 auto;
+            width: 150px; /* Adjust the width as needed */
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+        .contact-info {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .contact-info .info-text {
+            visibility: hidden;
+            width: 160px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .contact-info .info-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+        .contact-info:hover .info-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="section section-1">
+        <h1>Bitcoin Block <strong>Explorer</strong></h1>
+    </div>
+    <div class="section section-2">
+        <div class="column">
+            <img src="https://www.shutterstock.com/image-photo/isolated-objects-group-golden-bitcoin-600nw-2007615593.jpg" alt="Bitcoin" class="bitcoin-image">
+        </div>
+        <div class="column">
+            <table class="data-table">
+                <tr>
+                    <th>Current Block Height</th>
+                    <td id="block-height">Loading...</td>
+                </tr>
+                <tr>
+                    <th>Timestamp</th>
+                    <td id="timestamp">Loading...</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="section section-3">
+        <!-- <h2>Contact Information</h2> -->
+        <div class="contact-info">
+            <i class="fas fa-envelope"></i>
+            <span class="info-text">example@example.com</span>
+        </div>
+        <div class="contact-info">
+            <i class="fas fa-phone"></i>
+            <span class="info-text">(123) 456-7890</span>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to fetch and display the current block height
+        async function fetchBlockHeight() {
+            try {
+                const response = await fetch('/block_height');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('block-height').textContent = data.blockHeight;
+                // document.getElementById('timestamp').textContent = new Date(data.timestamp).toLocaleString(); 
+                document.getElementById('timestamp').textContent = data.timestamp;
+            } catch (error) {
+                console.error('Error fetching block height:', error);
+                document.getElementById('block-height').textContent = 'Error';
+                document.getElementById('timestamp').textContent = 'Error';
+            }
+        }
+
+        // Call fetchBlockHeight initially and every 10 seconds
+        fetchBlockHeight();
+        setInterval(fetchBlockHeight, 10000);
+    </script>
+</body>
+</html>
+
