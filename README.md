@@ -106,13 +106,12 @@ This project demonstrates a minimal end-to-end flow of a Bitcoin block height ex
 
 2. **Create `ingest.py`**:
    - Add the following content:
-     ```python
-     import sqlite3
+    ```python
+    import sqlite3
     import subprocess
     import time
-
-
     DB_PATH = 'blockchain.db'
+
     def get_block_height():
         result = subprocess.run(['/Users/kshetrahegde/Downloads/Bitcoin-rust/rust_client/target/release/./rust_client'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
