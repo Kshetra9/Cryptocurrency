@@ -9,9 +9,12 @@ def create_database():
     cursor = conn.cursor()
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS blockchain (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        block_height INTEGER NOT NULL,
-        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    block_height INTEGER,
+    network_hash_rate REAL,
+    difficulty REAL,
+    mempool_size INTEGER,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     );
     ''')
     conn.commit()
