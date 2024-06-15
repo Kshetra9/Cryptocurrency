@@ -1,8 +1,0 @@
-[package]
-name = "rust_client"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-bitcoin = "0.27.0"
-bitcoincore-rpc = "0.19.0"
